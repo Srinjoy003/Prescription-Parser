@@ -269,11 +269,24 @@ _init_state()
 # ---------------------------------------------------------------------------
 # Sidebar
 # ---------------------------------------------------------------------------
+
+import os
+import streamlit as st
+
+
 def render_sidebar() -> tuple[str, bool]:
     """
     Render sidebar controls.
     Returns (api_key, run_ocr).
     """
+
+    # Load local .env if available
+    try:
+        from dotenv import load_dotenv
+        load_dotenv()
+    except ImportError:
+        pass
+
     with st.sidebar:
         st.markdown("## 💊 RxParser")
         st.markdown("*Smart Prescription Analyzer*")
@@ -281,33 +294,35 @@ def render_sidebar() -> tuple[str, bool]:
 
         # API Key
         st.markdown("### 🔑 Gemini API Key")
+
+        # Priority:
+        # 1. User input
+        # 2. Streamlit secrets
+        # 3. Local environment / .env
+        try:
+            secret_key = st.secrets["GEMINI_API_KEY"]
+        except Exception:
+            secret_key = ""
+
+        # Fallback to local environment / .env
+        default_api_key = secret_key or os.getenv("GEMINI_API_KEY", "")
+
         api_key = st.text_input(
             "Enter your Google Gemini API key",
+            value=default_api_key,
             type="password",
             placeholder="AIza...",
             help="Get your free key at https://aistudio.google.com/",
             key="api_key_input",
         )
 
-        # Try Streamlit Cloud secrets first, then local .env fallback.
-        if not api_key:
-            try:
-                api_key = st.secrets.get("GEMINI_API_KEY", "")
-            except Exception:
-                api_key = ""
-
-        if not api_key:
-            try:
-                from dotenv import load_dotenv
-                load_dotenv()
-                api_key = os.getenv("GEMINI_API_KEY", "")
-            except ImportError:
-                api_key = os.getenv("GEMINI_API_KEY", "")
-
         if api_key:
             st.success("✅ API key loaded", icon="🔓")
         else:
-            st.warning("Please enter your Gemini API key to proceed.", icon="⚠️")
+            st.warning(
+                "Please enter your Gemini API key to proceed.",
+                icon="⚠️",
+            )
 
         st.divider()
 
@@ -336,6 +351,74 @@ Supports handwritten and printed prescriptions.
         """)
 
     return api_key, run_ocr
+
+# def render_sidebar() -> tuple[str, bool]:
+#     """
+#     Render sidebar controls.
+#     Returns (api_key, run_ocr).
+#     """
+#     with st.sidebar:
+#         st.markdown("## 💊 RxParser")
+#         st.markdown("*Smart Prescription Analyzer*")
+#         st.divider()
+
+#         # API Key
+#         st.markdown("### 🔑 Gemini API Key")
+#         api_key = st.text_input(
+#             "Enter your Google Gemini API key",
+#             type="password",
+#             placeholder="AIza...",
+#             help="Get your free key at https://aistudio.google.com/",
+#             key="api_key_input",
+#         )
+
+#         # Try Streamlit Cloud secrets first, then local .env fallback.
+#         if not api_key:
+#             try:
+#                 api_key = st.secrets.get("GEMINI_API_KEY", "")
+#             except Exception:
+#                 api_key = ""
+
+#         if not api_key:
+#             try:
+#                 from dotenv import load_dotenv
+#                 load_dotenv()
+#                 api_key = os.getenv("GEMINI_API_KEY", "")
+#             except ImportError:
+#                 api_key = os.getenv("GEMINI_API_KEY", "")
+
+#         if api_key:
+#             st.success("✅ API key loaded", icon="🔓")
+#         else:
+#             st.warning("Please enter your Gemini API key to proceed.", icon="⚠️")
+
+#         st.divider()
+
+#         # OCR toggle
+#         run_ocr = st.toggle(
+#             "Enable EasyOCR",
+#             value=True,
+#             help=(
+#                 "Run EasyOCR as a supplementary text extractor. "
+#                 "Adds ~3-5s per image but gives Gemini additional context."
+#             ),
+#         )
+
+#         st.divider()
+
+#         # Info
+#         st.markdown("""
+# **About this app**
+
+# Extracts structured data from handwritten medical prescriptions using:
+# - 🤖 **Gemini Flash** (multimodal vision)
+# - 👁️ **EasyOCR** (supplementary text)
+# - ✅ **Pydantic v2** (schema validation)
+
+# Supports handwritten and printed prescriptions.
+#         """)
+
+#     return api_key, run_ocr
 
 
 # ---------------------------------------------------------------------------
