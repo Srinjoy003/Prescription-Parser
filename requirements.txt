@@ -1,0 +1,36 @@
+# ─────────────────────────────────────────────────────────────────────────────
+# T13 — Smart Prescription Parser
+# requirements.txt
+# ─────────────────────────────────────────────────────────────────────────────
+
+# ── Core UI ──────────────────────────────────────────────────────────────────
+streamlit>=1.35.0
+
+# ── LLM / Vision ─────────────────────────────────────────────────────────────
+# Google Generative AI SDK (Gemini)
+google-generativeai>=0.8.0
+
+# ── OCR ──────────────────────────────────────────────────────────────────────
+easyocr>=1.7.1
+
+# ── PDF handling ─────────────────────────────────────────────────────────────
+# pypdf: PDF text extraction & image harvesting (no binary dependency)
+pypdf>=4.0.0
+# pdf2image: high-quality PDF-to-image conversion (requires poppler installed)
+# On Windows: choco install poppler  OR  https://github.com/oschwartz10612/poppler-windows
+pdf2image>=1.17.0
+
+# ── Image processing ─────────────────────────────────────────────────────────
+Pillow>=10.0.0
+
+# ── Schema validation ─────────────────────────────────────────────────────────
+pydantic>=2.0.0
+
+# ── Data / Export ─────────────────────────────────────────────────────────────
+pandas>=2.0.0
+
+# ── Environment / Config ──────────────────────────────────────────────────────
+python-dotenv>=1.0.0
+
+# ── Numerical (required by EasyOCR) ──────────────────────────────────────────
+numpy>=1.24.0
