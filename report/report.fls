@@ -325,6 +325,7 @@ INPUT C:\Users\srinj\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\sym
 INPUT C:\Users\srinj\AppData\Local\Programs\MiKTeX\fonts\tfm\public\amsfonts\symbols\msbm7.tfm
 INPUT C:\Users\srinj\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmbx12.tfm
 INPUT C:\Users\srinj\AppData\Local\Programs\MiKTeX\fonts\tfm\jknappen\ec\tcrm1200.tfm
+INPUT C:\Users\srinj\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmtt12.tfm
 INPUT C:\Users\srinj\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmr10.tfm
 INPUT C:\Users\srinj\AppData\Local\MiKTeX\fonts\map\pdftex\pdftex.map
 INPUT .\report.toc
@@ -332,7 +333,6 @@ INPUT .\report.toc
 INPUT report.toc
 OUTPUT report.toc
 INPUT C:\Users\srinj\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmti12.tfm
-INPUT C:\Users\srinj\AppData\Local\Programs\MiKTeX\fonts\tfm\public\cm\cmtt12.tfm
 INPUT ..\images\Screenshot 2026-05-06 194516.png
 INPUT ..\images\Screenshot 2026-05-06 194516.png
 INPUT ..\images\Screenshot 2026-05-06 194516.png
