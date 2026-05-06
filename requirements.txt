@@ -7,8 +7,8 @@
 streamlit>=1.35.0
 
 # ── LLM / Vision ─────────────────────────────────────────────────────────────
-# Google Generative AI SDK (Gemini)
-google-generativeai>=0.8.0
+# Google Gen AI SDK (Gemini)
+google-genai>=0.7.0
 
 # ── OCR ──────────────────────────────────────────────────────────────────────
 easyocr>=1.7.1

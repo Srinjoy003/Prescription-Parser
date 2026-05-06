@@ -40,6 +40,14 @@ Either:
 streamlit run app.py
 ```
 
+### 4. Deploy to Streamlit Cloud
+
+1. Push this repository to GitHub.
+2. On Streamlit Cloud, create a new app from the repo.
+3. Set the main file path to `app.py`.
+4. Add `GEMINI_API_KEY` in the app Secrets panel.
+5. Let Streamlit install `requirements.txt` and `packages.txt` automatically.
+
 ---
 
 ## 📁 Project Structure
@@ -52,6 +60,7 @@ Assignment3/
 ├── ocr_utils.py            ← EasyOCR wrapper + PDF→image + preprocessing
 ├── batch_processor.py      ← Tier 2: bulk processing with rate-limit handling
 ├── medicine_names.py       ← 78 pharmaceutical reference terms
+├── packages.txt            ← Streamlit Cloud system package list
 ├── sample_prescriptions/   ← (optional) Place sample .jpg files here
 ├── requirements.txt
 ├── .env.example
@@ -180,7 +189,7 @@ This app sends images to the **Google Gemini API**. On the free tier, data may b
 
 ```
 streamlit >= 1.35.0
-google-generativeai >= 0.8.0
+google-genai >= 0.7.0
 easyocr >= 1.7.1
 pypdf >= 4.0.0
 pdf2image >= 1.17.0
