@@ -289,7 +289,13 @@ def render_sidebar() -> tuple[str, bool]:
             key="api_key_input",
         )
 
-        # Try .env fallback
+        # Try Streamlit Cloud secrets first, then local .env fallback.
+        if not api_key:
+            try:
+                api_key = st.secrets.get("GEMINI_API_KEY", "")
+            except Exception:
+                api_key = ""
+
         if not api_key:
             try:
                 from dotenv import load_dotenv

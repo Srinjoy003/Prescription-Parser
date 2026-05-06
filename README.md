@@ -8,27 +8,34 @@
 ## 🚀 Quick Start
 
 ### 1. Install dependencies
+
 ```bash
 pip install -r requirements.txt
 ```
 
 > **Windows note for PDF support**: Install Poppler (needed by `pdf2image`):
+>
 > ```bash
 > choco install poppler
 > ```
+>
 > Or download from [poppler-windows releases](https://github.com/oschwartz10612/poppler-windows/releases).
 
 ### 2. Set your Gemini API Key
+
 Get a free key at [aistudio.google.com](https://aistudio.google.com/).
 
 Either:
+
 - Enter it directly in the app's sidebar, **or**
-- Copy `.env.example` → `.env` and paste your key:
+- Add `GEMINI_API_KEY` in Streamlit Cloud's Secrets panel, **or**
+- Copy `.env.example` → `.env` and paste your key locally:
   ```
   GEMINI_API_KEY=AIza...
   ```
 
 ### 3. Run the app
+
 ```bash
 streamlit run app.py
 ```
@@ -56,6 +63,7 @@ Assignment3/
 ## 🗂️ Features
 
 ### Tier 1 — Single File Mode
+
 1. Upload any prescription image (JPG, PNG, BMP, TIFF, WEBP) or PDF
 2. Preview the uploaded image alongside EasyOCR raw text
 3. Click **Parse Prescription** → Gemini extracts structured data
@@ -63,6 +71,7 @@ Assignment3/
 5. Download as **JSON** or **CSV**
 
 ### Tier 2 — Batch Mode
+
 1. Upload multiple files at once
 2. Processing progress bar with per-file status
 3. Combined medications table with `source_file` column
@@ -72,27 +81,29 @@ Assignment3/
 
 ## 📋 Extracted Schema
 
-| Category | Fields |
-|---|---|
-| Doctor | Name, Qualifications, Registration No. |
-| Clinic | Name, Address, Contact |
-| Patient | Name, Age, Sex, Weight, Address |
-| Clinical | Date, Chief Complaint, Diagnosis, Allergies |
-| Medications | Name, Strength, Form, Frequency, Duration, Route, Special Instructions |
-| Investigations | Lab tests / imaging ordered |
-| Follow-up | Review schedule, General advice |
-| Meta | Raw OCR text, Confidence notes |
+| Category       | Fields                                                                 |
+| -------------- | ---------------------------------------------------------------------- |
+| Doctor         | Name, Qualifications, Registration No.                                 |
+| Clinic         | Name, Address, Contact                                                 |
+| Patient        | Name, Age, Sex, Weight, Address                                        |
+| Clinical       | Date, Chief Complaint, Diagnosis, Allergies                            |
+| Medications    | Name, Strength, Form, Frequency, Duration, Route, Special Instructions |
+| Investigations | Lab tests / imaging ordered                                            |
+| Follow-up      | Review schedule, General advice                                        |
+| Meta           | Raw OCR text, Confidence notes                                         |
 
 ---
 
 ## 🌏 Dataset
 
 Optimized for the [Doctors' Handwritten Prescription Dataset](https://www.kaggle.com/datasets/mamun1113/doctors-handwritten-prescription-bd-dataset):
+
 - 4,680 word-level prescription images
 - 78 pharmaceutical term classes
 - Supports English + Bengali mixed handwriting
 
 The 78 known medicine names are used as a reference list:
+
 - Injected into the Gemini prompt for better accuracy
 - Used to **flag unknown medicines** post-extraction (yellow warning badges)
 
@@ -141,15 +152,18 @@ EasyOCR               Gemini 2.0 Flash
 ## ⚙️ Technical Notes
 
 ### Rate Limiting
+
 - Free Gemini tier: ~15 RPM
 - Batch mode automatically adds 1.5s delay between calls
 - Exponential backoff (up to 3 retries) on `429` errors
 
 ### PDF Support
+
 - Primary: `pdf2image` (requires Poppler, best quality)
 - Fallback: `pypdf` embedded image extraction
 
 ### EasyOCR
+
 - CPU mode by default (GPU auto-detected)
 - English only (Gemini handles Bengali natively)
 - Results filtered at confidence ≥ 0.25
